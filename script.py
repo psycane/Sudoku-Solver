@@ -23,13 +23,17 @@ def rectify(h):
     return hnew
 
 # Read the image
-im = cv2.imread('./img/1.jpg', cv2.IMREAD_GRAYSCALE)
+im = cv2.imread('./img/sudoku_test3.png')
 
 # Show image
 show(im)
 
+# Convert to grayscale
+gray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
+show(gray)
+
 # GuassianBlur for better thresholding
-gray = cv2.GaussianBlur(im, (5, 5), 0)
+gray = cv2.GaussianBlur(gray, (5, 5), 0)
 show(gray)
 
 # Thresholding - Black becomes blacker and white becomes whiter
@@ -64,3 +68,32 @@ warp = cv2.warpPerspective(gray,retval,(490,368))
 
 # Showing the grid
 show(warp)
+
+
+# gray = warp
+# edges = cv2.Canny(gray,50,150,apertureSize = 3)
+# cv2.imwrite('edges-50-150.jpg',edges)
+# minLineLength=100
+# lines = cv2.HoughLinesP(image=edges,rho=1,theta=np.pi/180, threshold=100,lines=np.array([]), minLineLength=minLineLength,maxLineGap=80)
+
+# a,b,c = lines.shape
+# for i in range(a):
+#     cv2.line(gray, (lines[i][0][0], lines[i][0][1]), (lines[i][0][2], lines[i][0][3]), (0, 0, 255), 3, cv2.LINE_AA)
+#     cv2.imwrite('houghlines5.jpg',gray)
+
+edges = cv2.Canny(warp,50,150,apertureSize = 3)
+
+lines = cv2.HoughLines(edges,1,np.pi/180,200)
+for rho,theta in lines[0]:
+    a = np.cos(theta)
+    b = np.sin(theta)
+    x0 = a*rho
+    y0 = b*rho
+    x1 = int(x0 + 1000*(-b))
+    y1 = int(y0 + 1000*(a))
+    x2 = int(x0 - 1000*(-b))
+    y2 = int(y0 - 1000*(a))
+
+    cv2.line(warp,(x1,y1),(x2,y2),(255,255,255),2)
+show(warp)
+cv2.imwrite('no_grid.jpg',warp)
