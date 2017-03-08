@@ -6,3 +6,4 @@ THREADS_PER_PAGE = 2
 CSRF_ENABLED = True
 CSRF_SESSION_KEY = "secret"
 SECRET_KEY = "secret_key"
+UPLOAD_FOLDER = "uploads/"
