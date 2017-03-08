@@ -507,7 +507,7 @@ class imageClass:
             print "No Kinect Detected!"
             print "Loading sudoku.jpg..."
             # for testing purposes
-            img = cv2.imread('1.jpg')
+            img = cv2.imread('sudoku_test3.png')
             self.captured = cv2.resize(img, (600, 600))
 
         # convert to grayscale
