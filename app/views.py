@@ -1,16 +1,18 @@
 from flask import Blueprint, render_template, request
 from app import app
 import os
+from random import randint
+from solver.main import main as solve_sudoku
 from werkzeug import secure_filename
-solver = Blueprint('views', __name__)
+solver_app = Blueprint('views', __name__)
 
 
-@solver.route('/', methods=['GET'])
+@solver_app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
 
 
-@solver.route('/upload', methods=['GET', 'POST'])
+@solver_app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.method == 'GET':
         return render_template('index.html')
@@ -24,7 +26,12 @@ def upload():
             file.save(os.path.join(
                 app.config['UPLOAD_FOLDER'], 'sudoku' + ext))
 
-            # PROCESS SUDOKU HERE
+            error, time_taken = solve_sudoku(os.path.join(
+                app.config['UPLOAD_FOLDER'], 'sudoku' + ext))
+            if error:
+                return error
+            else:
+                return render_template('output.html', time_taken=time_taken, output='/static/output.jpg?r=' + str(randint(1, 100000)))
 
             return 'Uploaded!'
         else:
