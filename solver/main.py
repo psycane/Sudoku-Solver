@@ -37,5 +37,5 @@ def main(image):
         print 'not solved!'
         return False
 
-main('test_images/sudoku15.jpg')
+main('test_images/unclear/sudoku8.jpg')
 
