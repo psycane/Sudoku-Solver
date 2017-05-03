@@ -3,8 +3,9 @@ import numpy as np
 
 
 def show(img, name="Image"):
-    cv2.imshow(name, img)
-    cv2.waitKey(0)
+    # cv2.imshow(name, img)
+    # cv2.waitKey(0)
+    pass
 
 
 def rectify(h):
@@ -34,16 +35,12 @@ def image_processing(image):
         h, w = img.shape[:2]
     print h, w
     show(img)
-    cv2.imwrite('00.jpg', img)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # show(gray)
-    cv2.imwrite('01.jpg', gray)
     blur = cv2.GaussianBlur(gray, (5, 5), 0)
     # show(blur)
-    cv2.imwrite('02.jpg', blur)
     thresh = cv2.adaptiveThreshold(gray, 255, 1, 1, 11, 12)
     # show(thresh)
-    cv2.imwrite('03.jpg', thresh)
     # find the countours
     contours, hierarchy = cv2.findContours(thresh,
                                            cv2.RETR_LIST,
@@ -107,17 +104,12 @@ def image_processing(image):
     retval = cv2.getPerspectiveTransform(approx, h)
     warp = cv2.warpPerspective(gray, retval, (450, 450))
     out = warp.copy()
-    cv2.imwrite('04.jpg', image_sudoku_candidates)
     final = cv2.warpPerspective(img, retval, (450, 450))
     show(final)
-    cv2.imwrite('05.jpg', final)
     ''' find the squares and numbers '''
     thresh = cv2.adaptiveThreshold(warp, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
                                    cv2.THRESH_BINARY, 11, 2)
     show(thresh)
-    #thresh = cv2.adaptiveThreshold(warp, 255, 1, 1, 11, 12)
-    cv2.imwrite('06.jpg', thresh)
-    # show(thresh)
     digits = ['0' for i in range(81)]
     position = []
     model = train()
@@ -156,7 +148,7 @@ def image_processing(image):
                         n = str(name) + '.jpg'
                         d[n] = pos
                         output = out[y:y + h, x:x + w]
-                        cv2.imwrite('intermediates/' + str(n), output)
+                        cv2.imwrite('/home/psycane/Sudoku-Solver/solver/intermediates/' + str(n), output)
                         position.append(0)
                         t = 1
                         name += 1
@@ -183,7 +175,7 @@ def recognizer(name, d, digits):
     for i in range(name):
         n = str(i) + '.jpg'
         pos = d[n]
-        img = cv2.imread('intermediates/' + str(n))
+        img = cv2.imread('/home/psycane/Sudoku-Solver/solver/intermediates/' + str(n))
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         blur = cv2.GaussianBlur(gray, (5, 5), 0)
         thresh = cv2.adaptiveThreshold(blur, 255, 1, 1, 11, 2)
@@ -221,8 +213,8 @@ def prepare_data():
 
     responses = np.array(responses, np.float32)
     responses = responses.reshape((1, responses.size))
-    np.savetxt('generalsamples.data', samples)
-    np.savetxt('generalresponses.data', responses)
+    np.savetxt('/home/psycane/Sudoku-Solver/solver/generalsamples.data', samples)
+    np.savetxt('/home/psycane/Sudoku-Solver/solver/generalresponses.data', responses)
 
 ##########################################################
 
@@ -230,8 +222,8 @@ def prepare_data():
 def train():
     ''' tarin the neural network '''
 
-    samples = np.loadtxt('generalsamples.data', np.float32)
-    responses = np.loadtxt('generalresponses.data', np.float32)
+    samples = np.loadtxt('/home/psycane/Sudoku-Solver/solver/generalsamples.data', np.float32)
+    responses = np.loadtxt('/home/psycane/Sudoku-Solver/solver/generalresponses.data', np.float32)
     responses = responses.reshape((1, responses.size))
 
     model = cv2.KNearest()

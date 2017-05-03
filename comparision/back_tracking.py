@@ -26,6 +26,6 @@ y_pos = np.arange(len(obj))
 plt.xticks(y_pos, obj)
 
 red_patch = mpatches.Patch(color='b', label='Back-Tracking')
-plt.legend(handles=[red_patch], bbox_to_anchor=(1.0, 0.5))
+plt.legend(handles=[red_patch], bbox_to_anchor=(1.5, 0.5))
 
 plt.show()
