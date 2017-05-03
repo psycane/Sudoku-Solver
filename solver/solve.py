@@ -36,7 +36,7 @@ def train():
     return model
 
 
-image = "sudoku.png"
+image = "test_images/sudoku.jpg"
 img = cv2.imread(image)
 # size of the image (height, width)
 h, w = img.shape[:2]
@@ -122,7 +122,6 @@ show(final)
 warp_gray = out.copy()'''
 
 
-import numpy as np
 IMAGE_WIDHT = 16
 IMAGE_HEIGHT = 16
 SUDOKU_SIZE = 9
@@ -212,7 +211,6 @@ def find_biggest_bounding_box(im_number_thresh):
     return [x_b, y_b, w, h]
 
 import math
-import numpy as np
 
 # sudoku representation
 sudoku = np.zeros(shape=(9 * 9, IMAGE_WIDHT * IMAGE_HEIGHT))

@@ -1,10 +1,9 @@
 import cv2
 import numpy as np
-from datetime import datetime
 
 
-def show(img):
-    cv2.imshow("IMAGE", img)
+def show(img, name="Image"):
+    cv2.imshow(name, img)
     cv2.waitKey(0)
 
 
@@ -22,16 +21,17 @@ def rectify(h):
 
     return hnew
 
-#####################################################
-
 
 def image_processing(image):
 
     img = cv2.imread(image)
     h, w = img.shape[:2]
-    if h > 2000:
-        img = cv2.resize(img, (0, 0), fx=0.20, fy=0.20)
-    h, w = img.shape[:2]
+    print h, w
+    if h > 1000 and w > 1000:
+        resize_parameter = round((450.0 / float(min(h, w))), 3)
+        print resize_parameter
+        img = cv2.resize(img, (0, 0), fx=resize_parameter, fy=resize_parameter)
+        h, w = img.shape[:2]
     print h, w
     show(img)
     cv2.imwrite('00.jpg', img)
@@ -117,7 +117,7 @@ def image_processing(image):
     show(thresh)
     #thresh = cv2.adaptiveThreshold(warp, 255, 1, 1, 11, 12)
     cv2.imwrite('06.jpg', thresh)
-    #show(thresh)
+    # show(thresh)
     digits = ['0' for i in range(81)]
     position = []
     model = train()
@@ -156,7 +156,7 @@ def image_processing(image):
                         n = str(name) + '.jpg'
                         d[n] = pos
                         output = out[y:y + h, x:x + w]
-                        cv2.imwrite('intermediates/'+str(n), output)
+                        cv2.imwrite('intermediates/' + str(n), output)
                         position.append(0)
                         t = 1
                         name += 1
@@ -183,7 +183,7 @@ def recognizer(name, d, digits):
     for i in range(name):
         n = str(i) + '.jpg'
         pos = d[n]
-        img = cv2.imread('intermediates/'+str(n))
+        img = cv2.imread('intermediates/' + str(n))
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         blur = cv2.GaussianBlur(gray, (5, 5), 0)
         thresh = cv2.adaptiveThreshold(blur, 255, 1, 1, 11, 2)
