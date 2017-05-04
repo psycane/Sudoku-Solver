@@ -16,7 +16,7 @@ def main(image):
         return ('Sudoku not recognised!', t)
     print board
     solved_sudoku = solve(board)
-    t = time.clock() - start
+
     print solved_sudoku
     if(solved_sudoku):
         output = []
@@ -33,6 +33,7 @@ def main(image):
         cv2.imwrite('/home/psycane/Sudoku-Solver/app/static/output.jpg', output)
         # cv2.imshow('output', final_image)
         # cv2.waitKey(0)
+        t = time.clock() - start
         return (error, t)
 
     else:

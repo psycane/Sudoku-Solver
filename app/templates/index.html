@@ -9,13 +9,28 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- JavaScript -->
     <script type="text/javascript">
         $(document).ready(function() {
             {% if error %}
-            alert("{{ error }}");
+            alert("{{ error }}"); 
             {% endif %}
+
+            $(document).on('click', '#upload_file', function(e) {
+                e.preventDefault();
+                $("#upload_sudoku").click();
+            });
+
+            $(document).on('change', '#upload_sudoku', function(e) {
+                e.preventDefault();
+                $("#submit_file").click();
+            });
         });
     </script>
     <!-- CSS -->
@@ -28,21 +43,54 @@
             left: 50%;
             top: 50%;
         }
+        
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1 0 auto;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="page-header">
-            <h3>Sudoku Solver</h3>
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo">Sudoku Solver</a>
+            </div>
+        </nav>
+    </header>
+    <main style="top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
+        <br><br><br><br><br><br><br><br>
+        <form action="upload" , method="post" enctype="multipart/form-data">
+            <input id="upload_sudoku" type="file" name="sudoku_image" accept="image/*" style="display: none;">
+
+            <div style="top: 0; bottom: 0; left: 0; right: 0; margin: auto;">
+                <button id="upload_file" class="waves-effect waves-light btn-large"><i class="material-icons left">perm_media</i>Capture Sudoku</button>
+            </div>
+
+            <input id="submit_file" type="submit" style="display: none;">
+        </form>
+    </main>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Sudoko</h5>
+                    <p class="grey-text text-lighten-4">Hours of brain challenging job, reduced to fraction of a second.</p>
+                </div>
+            </div>
         </div>
-        <div class="upload">
-            <form action="upload" , method="post"  enctype="multipart/form-data">
-                <input type="file" name="sudoku_image" accept="image/*">
-                <button id="upload_button" type="submit" class="btn btn-primary">Upload</button>
-            </form>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2017 JUIT CSE
+            </div>
         </div>
-    </div>
+    </footer>
 </body>
 
 </html>

@@ -11,25 +11,83 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <!-- JavaScript -->
     <script type="text/javascript">
     </script>
     <!-- CSS -->
     <style type="text/css">
-
+        #upload_button {
+            height: 50px;
+            width: 100px;
+            position: absolute;
+            margin: -25px 0 0 -50px;
+            left: 50%;
+            top: 50%;
+        }
+        
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1 0 auto;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="page-header">
-            <h3>Output</h3>
-        </div>
-        <div class="sudoku_image">
-            <img src="{{ output }}">
-            <h3>Time taken: {{ time_taken }} seconds</h3>
+
+    <header>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="/" class="brand-logo">Sudoku Solver</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            {% if error %}
+            <center>
+                <br><br><br><br><br><br><br><br>
+                <div class="error_div">
+                    <h5 style="color: crimson;">{{ error }}</h5>
+                </div>
+            </center>
+            {% else %}
+            <br><br><br>
+            <div class="row">
+                <div class="col s12 m7">
+                  <div class="card z-depth-3">
+                    <div class="card-image">
+                      <img class="materialboxed" width="100%"  src="{{ output }}">
+                  </div>
+                  <div class="card-content">
+                      <center><p><b>Time taken:</b> {{ time_taken }} seconds</p></center>
+                  </div>
+                  
+              </div>
+          </div>
+      </div>    
+      {% endif %}
+  </div>
+</main>
+<footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="container">
+            © 2017 JUIT CSE
         </div>
     </div>
+</footer>
 </body>
 
 </html>

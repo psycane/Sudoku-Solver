@@ -28,12 +28,7 @@ def upload():
 
             error, time_taken = solve_sudoku(os.path.join(
                 app.config['UPLOAD_FOLDER'], 'sudoku' + ext))
-            if error:
-                return error
-            else:
-                return render_template('output.html', time_taken=time_taken, output='/static/output.jpg?r=' + str(randint(1, 100000)))
-
-            return 'Uploaded!'
+            return render_template('output.html', error=error, time_taken=time_taken, output='/static/output.jpg?r=' + str(randint(1, 100000)))
         else:
             error = 'Please select a png or jpg file!'
             return render_template('index.html', error=error)
